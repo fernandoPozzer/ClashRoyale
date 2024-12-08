@@ -1,0 +1,32 @@
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Ignore auto-generated VS/JetBrains Rider files
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Ignore crash reports and log files
+sysinfo.txt
+*.stacktrace
+
+# Ignore files related to Unity Collaborate
+/[Uu]ser[Ss]ettings/
+
+# Ignore other files you might not want to share
+*.DS_Store
+*.apk
+*.aab
