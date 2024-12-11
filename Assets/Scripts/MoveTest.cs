@@ -22,17 +22,25 @@ public class MoveTest : MonoBehaviour
     public float attackDistance = 5f;
     public float speed = 0.001f;
 
+    private HealthBar healthBar;
+    private float initialDistance;
+
     void Start()
     {
         ittinerary = new List<Vector3>();
 
         bridgeLenght = leftBridge.transform.localScale.z;
         MoveTo(targetPos.position);
+
+        healthBar = gameObject.GetComponentInChildren<HealthBar>();
+        initialDistance = GetDistanceXZ(targetPos.position, transform.position);
     }
 
     void Update()
     {
         Move();
+
+        healthBar.UpdateHeath(GetDistanceXZ(targetPos.position, transform.position), initialDistance);
     }
 
     private void MoveTo(Vector3 target)
