@@ -61,7 +61,13 @@ public class AgentManager : MonoBehaviour
     {
         foreach (Agent attacker in attackers)
         {
+            /// O atacante pode ter morrido no ataque anterior
             if (attacker.IsDead())
+            {
+                continue;
+            }
+
+            if (!attacker.CanAttack())
             {
                 continue;
             }

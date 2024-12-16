@@ -8,6 +8,7 @@ public class Agent : MonoBehaviour
     public float attackDistance = 5f;
     public float attackSpeed = 1f;
     public int attackDamage = 20;
+    private float lastAttackTime = 0f;
 
     public float speed = 0.001f;
 
@@ -43,9 +44,16 @@ public class Agent : MonoBehaviour
         healthBar.UpdateHeath(health, maxHealth);
     }
 
+    public bool CanAttack()
+    {
+        return Time.time >= lastAttackTime + attackSpeed;
+    }
+
     public void MakeAttack()
     {
+        lastAttackTime = Time.time;
 
+        /// TODO: Add animação
     }
 
     public bool IsDead()
