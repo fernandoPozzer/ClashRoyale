@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AgentManager : MonoBehaviour
@@ -8,36 +9,63 @@ public class AgentManager : MonoBehaviour
     List<Agent> enemies = new();
 
     [SerializeField]
-    List<Agent> allyTowers = new();
+    List<Agent> allyTowers;
 
     [SerializeField]
-    List<Agent> enemyTowers = new();
+    List<Agent> enemyTowers;
 
-    public void AddEnemy(Agent agent)
+    [SerializeField]
+    List<GameObject> availableTroops;
+
+    public void AddEnemy(int idx, Vector3 position)
     {
-        enemies.Add(agent);
+        enemies.Add(InstantiateTroop(idx, position));
     }
 
-    public void AddAlly(Agent agent)
+    public void AddAlly(int idx, Vector3 position)
     {
-        allies.Add(agent);
+        allies.Add(InstantiateTroop(idx, position));
+    }
+
+    private Agent InstantiateTroop(int idx, Vector3 position)
+    {
+        position.y = 0;
+
+        GameObject gameObject = Instantiate(availableTroops[idx], position, Quaternion.identity);
+        return gameObject.GetComponent<Agent>();
     }
 
     void Start()
     {
-        
+        AddEnemy(0, new Vector3(-12, 0, 4));
     }
 
     void Update()
     {
         checkAttacks(allies, enemies);
         checkAttacks(enemies, allies);
+
+        checkAttacks(allyTowers, enemies);
+        checkAttacks(enemyTowers, allies);
+
+        checkAttacks(allies, enemyTowers);
+        checkAttacks(enemies, allyTowers);
+
+        RemoveDeadTroops(allies);
+        RemoveDeadTroops(enemies);
+        RemoveDeadTroops(enemyTowers);
+        RemoveDeadTroops(allyTowers);
     }
 
     private void checkAttacks(List<Agent> attackers, List<Agent> victims)
     {
         foreach (Agent attacker in attackers)
         {
+            if (attacker.IsDead())
+            {
+                continue;
+            }
+
             bool attackerHitSomething = false;
 
             foreach (Agent victim in victims)
@@ -46,16 +74,12 @@ public class AgentManager : MonoBehaviour
 
                 if (distance < attacker.attackDistance)
                 {
+                    Debug.Log($"{attacker.name} atacou {victim.name}");
+
                     attacker.MakeAttack();
                     attackerHitSomething = true;
 
                     victim.ReceiveAttack(attacker.attackDamage);
-
-                    if (victim.IsDead())
-                    {
-                        victims.Remove(victim);
-                        victim.Destroy();
-                    }
                 }
             }
 
@@ -63,6 +87,23 @@ public class AgentManager : MonoBehaviour
             if (!attackerHitSomething && attacker.canMove)
             {
                 /// FINALIZAR
+            }
+        }
+    }
+
+    private void RemoveDeadTroops(List<Agent> troops)
+    {
+        if (!troops.Any())
+        {
+            return;
+        }
+
+        for (int i = troops.Count - 1; i >= 0; i--)
+        {
+            if (troops[i].IsDead())
+            {
+                troops[i].Destroy(); // Chame o método Destroy antes de remover.
+                troops.RemoveAt(i);
             }
         }
     }
