@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class AgentManager : MonoBehaviour
@@ -16,6 +17,23 @@ public class AgentManager : MonoBehaviour
 
     [SerializeField]
     List<GameObject> availableTroops;
+
+    void Start()
+    {
+        AddEnemy(0, new Vector3(0, 1, 28.5f));
+
+        enemies.AddRange(enemyTowers);
+        allies.AddRange(allyTowers);
+    }
+
+    void Update()
+    {
+        checkAttacks(allies, enemies);
+        checkAttacks(enemies, allies);
+
+        RemoveDeadTroops(allies);
+        RemoveDeadTroops(enemies);
+    }
 
     public void AddEnemy(int idx, Vector3 position)
     {
@@ -35,28 +53,6 @@ public class AgentManager : MonoBehaviour
         return gameObject.GetComponent<Agent>();
     }
 
-    void Start()
-    {
-        AddEnemy(0, new Vector3(-12, 0, 4));
-    }
-
-    void Update()
-    {
-        checkAttacks(allies, enemies);
-        checkAttacks(enemies, allies);
-
-        checkAttacks(allyTowers, enemies);
-        checkAttacks(enemyTowers, allies);
-
-        checkAttacks(allies, enemyTowers);
-        checkAttacks(enemies, allyTowers);
-
-        RemoveDeadTroops(allies);
-        RemoveDeadTroops(enemies);
-        RemoveDeadTroops(enemyTowers);
-        RemoveDeadTroops(allyTowers);
-    }
-
     private void checkAttacks(List<Agent> attackers, List<Agent> victims)
     {
         foreach (Agent attacker in attackers)
@@ -67,6 +63,7 @@ public class AgentManager : MonoBehaviour
                 continue;
             }
 
+            /// O atacante pode estar com cooldown do ataque
             if (!attacker.CanAttack())
             {
                 continue;
@@ -82,19 +79,52 @@ public class AgentManager : MonoBehaviour
                 {
                     Debug.Log($"{attacker.name} atacou {victim.name}");
 
-                    attacker.MakeAttack();
                     attackerHitSomething = true;
+                    attacker.Attack(victim);
 
-                    victim.ReceiveAttack(attacker.attackDamage);
+                    if (!attacker.MakesAreaDamageAttack)
+                    {
+                        break;
+                    }
                 }
             }
 
-            /// Se não existem alvos, o agente pode andar
-            if (!attackerHitSomething && attacker.canMove)
+            /// Se não existem alvos no range do atacante e o agente pode andar
+            if (!attackerHitSomething && !attacker.IsBuilding)
             {
-                /// FINALIZAR
+                attacker.MoveTo(GetNextTarget(attacker, victims));
+                attacker.Move();
             }
         }
+    }
+
+    private Agent GetNextTarget(Agent agent, List<Agent> agentEnemies)
+    {
+        Agent nextTarget = null;
+        float minDist = 1000f;
+
+        foreach (Agent enemy in agentEnemies)
+        {
+            if (enemy.IsDead())
+            {
+                continue;
+            }
+
+            if (agent.TargetsBuilding && !enemy.IsBuilding)
+            {
+                continue;
+            }
+
+            float distance = Vector3.Distance(agent.transform.position, enemy.transform.position);
+
+            if (distance < minDist)
+            {
+                distance = minDist;
+                nextTarget = enemy;
+            }
+        }
+
+        return nextTarget;
     }
 
     private void RemoveDeadTroops(List<Agent> troops)
@@ -108,7 +138,7 @@ public class AgentManager : MonoBehaviour
         {
             if (troops[i].IsDead())
             {
-                troops[i].Destroy(); // Chame o método Destroy antes de remover.
+                troops[i].Destroy();
                 troops.RemoveAt(i);
             }
         }

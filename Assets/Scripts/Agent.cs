@@ -1,26 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
+    //-------------------
+    // ATTACK
+    //-------------------
+
     public float attackDistance = 5f;
-    public float attackSpeed = 1f;
+    public float attackCooldown = 1f;
     public int attackDamage = 20;
     private float lastAttackTime = 0f;
 
-    public float speed = 0.001f;
+    /// <summary>
+    /// Indica se o ataque dá dano em área.
+    /// Se der, permite que mais de uma tropa inimiga tome dano.
+    /// </summary>
+    public bool MakesAreaDamageAttack = false;
+    
+    //-------------------
+    // AGENT TYPE
+    //-------------------
 
-    public bool canMove = true;
+    public bool IsBuilding = false;
+
+    /// <summary>
+    /// Ataca apenas construções.
+    /// </summary>
+    public bool TargetsBuilding = false;
+
+    //-------------------
+    // HEALTH
+    //-------------------
 
     public const int maxHealth = 2000;
     public int health = 2000;
-
     private HealthBar healthBar;
+
+    //-------------------
+    // MOVEMENT
+    //-------------------
 
     private List<Vector3> ittinerary;
     private bool isMoving = false;
+    public float speed = 0.001f;
 
     void Start()
     {
@@ -32,8 +58,9 @@ public class Agent : MonoBehaviour
     
     }
 
-    public void MoveTo(Vector3 target)
+    public void MoveTo(Agent targetAgent)
     {
+        Vector3 target = targetAgent.transform.position;
         ittinerary = Navigation.GetIttinerary(transform.position, target);
         isMoving = true;
     }
@@ -46,12 +73,14 @@ public class Agent : MonoBehaviour
 
     public bool CanAttack()
     {
-        return Time.time >= lastAttackTime + attackSpeed;
+        return Time.time >= lastAttackTime + attackCooldown;
     }
 
-    public void MakeAttack()
+    public void Attack(Agent victim)
     {
         lastAttackTime = Time.time;
+
+        victim.ReceiveAttack(attackDamage);
 
         /// TODO: Add animação
     }
@@ -66,7 +95,7 @@ public class Agent : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void Move()
+    public void Move()
     {
         if (!isMoving || !ittinerary.Any())
         {
@@ -82,7 +111,6 @@ public class Agent : MonoBehaviour
             if (IsFinalIttineraryPoint)
             {
                 isMoving = false;
-                /// COMECAR ATAQUE
                 return;
             }
         }
