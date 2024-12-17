@@ -147,12 +147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209b04137819e0948915f204952137ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 50
-  attackSpeed: 1
+  attackDistance: 1.5
+  attackCooldown: 0.2
   attackDamage: 20
-  speed: 0.001
-  canMove: 1
+  MakesAreaDamageAttack: 0
+  IsBuilding: 0
+  TargetsBuilding: 0
   health: 2000
+  speed: 0.1
 --- !u!1001 &9101137877323651584
 PrefabInstance:
   m_ObjectHideFlags: 0

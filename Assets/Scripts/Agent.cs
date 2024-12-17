@@ -62,6 +62,13 @@ public class Agent : MonoBehaviour
     {
         Vector3 target = targetAgent.transform.position;
         ittinerary = Navigation.GetIttinerary(transform.position, target);
+
+        Debug.Log("ITINERÁRIO:");
+        foreach (Vector3 node in ittinerary)
+        {
+            Debug.Log(node);
+        }
+
         isMoving = true;
     }
 

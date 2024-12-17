@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.TerrainUtils;
 
 public class AgentManager : MonoBehaviour
 {
@@ -20,7 +21,9 @@ public class AgentManager : MonoBehaviour
 
     void Start()
     {
-        AddEnemy(0, new Vector3(0, 1, 28.5f));
+        AddEnemy(0, new Vector3(-1, 1, 28.5f));
+
+        AddAlly(0, new Vector3(-10, 1, 12f));
 
         enemies.AddRange(enemyTowers);
         allies.AddRange(allyTowers);
@@ -37,19 +40,20 @@ public class AgentManager : MonoBehaviour
 
     public void AddEnemy(int idx, Vector3 position)
     {
-        enemies.Add(InstantiateTroop(idx, position));
+        enemies.Add(InstantiateTroop(idx, position, Color.red));
     }
 
     public void AddAlly(int idx, Vector3 position)
     {
-        allies.Add(InstantiateTroop(idx, position));
+        allies.Add(InstantiateTroop(idx, position, Color.blue));
     }
 
-    private Agent InstantiateTroop(int idx, Vector3 position)
+    private Agent InstantiateTroop(int idx, Vector3 position, Color color)
     {
         position.y = 0;
 
         GameObject gameObject = Instantiate(availableTroops[idx], position, Quaternion.identity);
+        gameObject.GetComponent<Renderer>().material.color = color;
         return gameObject.GetComponent<Agent>();
     }
 

@@ -120,11 +120,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDistance: 10
-  attackSpeed: 1
+  attackCooldown: 1
   attackDamage: 20
-  speed: 0.001
-  canMove: 0
+  MakesAreaDamageAttack: 0
+  IsBuilding: 1
+  TargetsBuilding: 0
   health: 2000
+  speed: 0.001
 --- !u!1001 &7805687452924625513
 PrefabInstance:
   m_ObjectHideFlags: 0

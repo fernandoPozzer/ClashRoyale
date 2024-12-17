@@ -26,11 +26,24 @@ public class Navigation : MonoBehaviour
         Vector3 bridgeToUse = GetBridgeToUse(agentPosition);
         (Vector3 entrance, Vector3 exit) = GetBridgeEntranceAndExit(agentPosition, bridgeToUse);
 
-        ittinerary.Add(entrance);
+        if (ShouldAddBridgeEntrancePosition(agentPosition))
+        {
+            ittinerary.Add(entrance);
+        }
+
         ittinerary.Add(exit);
         ittinerary.Add(target);
 
         return ittinerary;
+    }
+
+    private static bool ShouldAddBridgeEntrancePosition(Vector3 agentPosition)
+    {
+        float minDist = 0.2f;
+        float deltaX1 = Mathf.Abs(agentPosition.x - leftBridge.x);
+        float deltaX2 = Mathf.Abs(agentPosition.x - rightBridge.x);
+
+        return deltaX1 > minDist && deltaX2 > minDist;
     }
 
     /// <summary>
