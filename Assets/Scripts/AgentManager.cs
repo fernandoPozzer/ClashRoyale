@@ -123,7 +123,7 @@ public class AgentManager : MonoBehaviour
 
             if (distance < minDist)
             {
-                distance = minDist;
+                minDist = distance;
                 nextTarget = enemy;
             }
         }
