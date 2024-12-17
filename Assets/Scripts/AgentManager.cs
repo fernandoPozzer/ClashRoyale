@@ -22,8 +22,7 @@ public class AgentManager : MonoBehaviour
     void Start()
     {
         AddEnemy(0, new Vector3(-1, 1, 28.5f));
-
-        AddAlly(0, new Vector3(-10, 1, 12f));
+        AddAlly(1, new Vector3(-10, 1, 12f));
 
         enemies.AddRange(enemyTowers);
         allies.AddRange(allyTowers);
@@ -40,12 +39,34 @@ public class AgentManager : MonoBehaviour
 
     public void AddEnemy(int idx, Vector3 position)
     {
-        enemies.Add(InstantiateTroop(idx, position, Color.red));
+        Agent agent = InstantiateTroop(idx, position, Color.red);
+
+        if (!agent.IsGroupOfAgents)
+        {
+            enemies.Add(agent);
+            return;
+        }
+
+        foreach (Agent groupAgent in agent.Agents)
+        {
+            enemies.Add(groupAgent);
+        }
     }
 
     public void AddAlly(int idx, Vector3 position)
     {
-        allies.Add(InstantiateTroop(idx, position, Color.blue));
+        Agent agent = InstantiateTroop(idx, position, Color.blue);
+
+        if (!agent.IsGroupOfAgents)
+        {
+            allies.Add(agent);
+            return;
+        }
+
+        foreach (Agent groupAgent in agent.Agents)
+        {
+            allies.Add(groupAgent);
+        }
     }
 
     private Agent InstantiateTroop(int idx, Vector3 position, Color color)
@@ -53,7 +74,24 @@ public class AgentManager : MonoBehaviour
         position.y = 0;
 
         GameObject gameObject = Instantiate(availableTroops[idx], position, Quaternion.identity);
-        gameObject.GetComponent<Renderer>().material.color = color;
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+
+        if(renderer == null)
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                Renderer childRenderer = child.GetComponent<Renderer>();
+
+                if (childRenderer != null)
+                {
+                    childRenderer.material.color = color;
+                }
+            }
+
+            return gameObject.GetComponent<Agent>();
+        }
+
+        renderer.material.color = color;
         return gameObject.GetComponent<Agent>();
     }
 

@@ -28,6 +28,14 @@ public class Agent : MonoBehaviour
     public bool IsBuilding = false;
 
     /// <summary>
+    /// Determina se a tropa é um grupo ou apenas um agente.
+    /// </summary>
+    public bool IsGroupOfAgents = false;
+
+    [SerializeField]
+    public List<Agent> Agents;
+
+    /// <summary>
     /// Ataca apenas construções.
     /// </summary>
     public bool TargetsBuilding = false;
