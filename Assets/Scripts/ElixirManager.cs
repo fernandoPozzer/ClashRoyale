@@ -34,4 +34,14 @@ public class ElixirManager : MonoBehaviour
             lastIncreaseTime = Time.time;
         }
     }
+
+    public void DecrementElixir(float elixir)
+    {
+        currentElixir -= elixir;
+
+        if (currentElixir < 0)
+        {
+            currentElixir = 0;
+        }
+    }
 }

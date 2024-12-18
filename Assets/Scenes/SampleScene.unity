@@ -461,9 +461,12 @@ MonoBehaviour:
   - {fileID: 1696044848}
   - {fileID: 1910556868863038854}
   availableTroops:
-  - {fileID: 6801697976417117582, guid: 48dff41ba610c18468d8b202fa507e77, type: 3}
-  - {fileID: 4524485402841735560, guid: 3c3605e4335f79b4787876c8af331056, type: 3}
-  - {fileID: 5723525858587762225, guid: cd9aa1c6a861d8046a2ef8734ae46a5d, type: 3}
+  - gameObject: {fileID: 6801697976417117582, guid: 48dff41ba610c18468d8b202fa507e77, type: 3}
+    elixirCost: 4
+  - gameObject: {fileID: 4524485402841735560, guid: 3c3605e4335f79b4787876c8af331056, type: 3}
+    elixirCost: 3
+  - gameObject: {fileID: 5723525858587762225, guid: cd9aa1c6a861d8046a2ef8734ae46a5d, type: 3}
+    elixirCost: 5
 --- !u!4 &554571246
 Transform:
   m_ObjectHideFlags: 0

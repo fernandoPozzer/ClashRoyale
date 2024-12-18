@@ -16,8 +16,15 @@ public class AgentManager : MonoBehaviour
     [SerializeField]
     List<Agent> enemyTowers;
 
+    [System.Serializable]
+    public struct Card
+    {
+        public GameObject gameObject;
+        public int elixirCost;
+    }
+
     [SerializeField]
-    List<GameObject> availableTroops;
+    List<Card> availableTroops;
 
     void Start()
     {
@@ -73,7 +80,7 @@ public class AgentManager : MonoBehaviour
     {
         position.y = 0;
 
-        GameObject gameObject = Instantiate(availableTroops[idx], position, Quaternion.identity);
+        GameObject gameObject = Instantiate(availableTroops[idx].gameObject, position, Quaternion.identity);
         Renderer renderer = gameObject.GetComponent<Renderer>();
 
         if(renderer == null)
