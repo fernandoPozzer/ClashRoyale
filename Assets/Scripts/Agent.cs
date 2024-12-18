@@ -63,7 +63,7 @@ public class Agent : MonoBehaviour
 
     void Update()
     {
-    
+        transform.rotation = Quaternion.identity;
     }
 
     public void MoveTo(Agent targetAgent)
@@ -71,11 +71,11 @@ public class Agent : MonoBehaviour
         Vector3 target = targetAgent.transform.position;
         ittinerary = Navigation.GetIttinerary(transform.position, target);
 
-        Debug.Log("ITINERÁRIO:");
+        /*Debug.Log("ITINERÁRIO:");
         foreach (Vector3 node in ittinerary)
         {
             Debug.Log(node);
-        }
+        }*/
 
         isMoving = true;
     }
