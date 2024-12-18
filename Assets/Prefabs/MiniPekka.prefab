@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4520644150055248671}
   - component: {fileID: 6123890133173936685}
   m_Layer: 0
-  m_Name: cubo
+  m_Name: MiniPekka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209b04137819e0948915f204952137ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 4
+  attackDistance: 1
   attackCooldown: 2.5
   attackDamage: 450
   MakesAreaDamageAttack: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
   Agents: []
   TargetsBuilding: 0
   health: 1700
-  speed: 0.1
+  speed: 0.02
 --- !u!1001 &9101137877323651584
 PrefabInstance:
   m_ObjectHideFlags: 0

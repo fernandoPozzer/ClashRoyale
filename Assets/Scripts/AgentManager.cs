@@ -21,8 +21,8 @@ public class AgentManager : MonoBehaviour
 
     void Start()
     {
-        AddEnemy(0, new Vector3(-1, 1, 28.5f));
-        AddAlly(1, new Vector3(-10, 1, 12f));
+        AddEnemy(1, new Vector3(-1, 1, 28.5f));
+        AddAlly(2, new Vector3(-10, 1, 12f));
 
         enemies.AddRange(enemyTowers);
         allies.AddRange(allyTowers);
