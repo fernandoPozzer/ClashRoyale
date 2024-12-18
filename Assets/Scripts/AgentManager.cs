@@ -117,7 +117,7 @@ public class AgentManager : MonoBehaviour
             {
                 float distance = Vector3.Distance(attacker.transform.position, victim.transform.position);
 
-                if (distance < attacker.attackDistance)
+                if (distance < attacker.attackDistance + victim.transform.localScale.x)
                 {
                     Debug.Log($"{attacker.name} atacou {victim.name}");
 
