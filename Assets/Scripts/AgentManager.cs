@@ -28,9 +28,6 @@ public class AgentManager : MonoBehaviour
 
     void Start()
     {
-        AddEnemy(1, new Vector3(-1, 1, 28.5f));
-        AddAlly(2, new Vector3(-10, 1, 12f));
-
         enemies.AddRange(enemyTowers);
         allies.AddRange(allyTowers);
     }
@@ -60,20 +57,33 @@ public class AgentManager : MonoBehaviour
         }
     }
 
-    public void AddAlly(int idx, Vector3 position)
+    /// <summary>
+    /// Intancia a carta e retorna quanto de elixir deve ser decrementado.
+    /// Caso não tenha elixir suficiente, retorna zero (pois não instancia a carta).
+    /// </summary>
+    public int AddAlly(int idx, Vector3 position, float currentElixir)
     {
+        int elixirCost = availableTroops[idx].elixirCost;
+
+        if (elixirCost > currentElixir)
+        {
+            return 0;
+        }
+
         Agent agent = InstantiateTroop(idx, position, Color.blue);
 
         if (!agent.IsGroupOfAgents)
         {
             allies.Add(agent);
-            return;
+            return elixirCost;
         }
 
         foreach (Agent groupAgent in agent.Agents)
         {
             allies.Add(groupAgent);
         }
+
+        return elixirCost;
     }
 
     private Agent InstantiateTroop(int idx, Vector3 position, Color color)

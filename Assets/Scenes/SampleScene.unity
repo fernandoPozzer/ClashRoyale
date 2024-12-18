@@ -408,6 +408,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   agentManager: {fileID: 554571245}
+  elixirManager: {fileID: 833428884}
 --- !u!4 &464750099
 Transform:
   m_ObjectHideFlags: 0
@@ -576,6 +577,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &833428884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1436648352778336432, guid: 22cacd9dae9a26a4b82bfa6d4134633c, type: 3}
+  m_PrefabInstance: {fileID: 2832707258616246264}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b8f037c0e9fdd489ed9f86edb0fa7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &857164907
 GameObject:
   m_ObjectHideFlags: 0

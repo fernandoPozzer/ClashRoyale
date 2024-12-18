@@ -13,6 +13,9 @@ public class PlaceTroop : MonoBehaviour
     [SerializeField]
     private AgentManager agentManager;
 
+    [SerializeField]
+    private ElixirManager elixirManager;
+
     private int currentTroop = -1;
 
     void Update()
@@ -36,7 +39,8 @@ public class PlaceTroop : MonoBehaviour
             // Se o raycast acertar algo na layer do terreno
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, terrainLayer))
             {
-                agentManager.AddAlly(currentTroop, hit.point);
+                int decrementedElixir = agentManager.AddAlly(currentTroop, hit.point, elixirManager.GetCurrentElixir());
+                elixirManager.DecrementElixir(decrementedElixir);
             }
         }
     }

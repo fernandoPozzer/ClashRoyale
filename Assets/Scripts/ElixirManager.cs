@@ -35,6 +35,11 @@ public class ElixirManager : MonoBehaviour
         }
     }
 
+    public float GetCurrentElixir()
+    {
+        return currentElixir;
+    }
+
     public void DecrementElixir(float elixir)
     {
         currentElixir -= elixir;
