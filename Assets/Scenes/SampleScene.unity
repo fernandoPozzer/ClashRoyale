@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac8a1b766c33764ca92f0aa726a7977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingLayer:
+  towerLayer:
     serializedVersion: 2
     m_Bits: 1
   terrainLayer:

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlaceTroop : MonoBehaviour
 {
     [SerializeField]
-    private LayerMask buildingLayer;
+    private LayerMask towerLayer;
 
     [SerializeField]
     private LayerMask terrainLayer;
@@ -21,7 +21,7 @@ public class PlaceTroop : MonoBehaviour
             RaycastHit hit;
 
             // Se o raycast acertou as torres
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildingLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, towerLayer))
             {
                 return;
             }
