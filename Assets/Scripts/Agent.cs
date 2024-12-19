@@ -15,6 +15,8 @@ public class Agent : MonoBehaviour
     public int attackDamage = 20;
     private float lastAttackTime = 0f;
 
+    public float VisionReach = 10f;
+
     /// <summary>
     /// Indica se o ataque dá dano em área.
     /// Se der, permite que mais de uma tropa inimiga tome dano.

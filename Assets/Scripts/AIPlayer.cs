@@ -24,6 +24,11 @@ public class AIPlayer : MonoBehaviour
 
     void Update()
     {
+        if (agentManager.gameIsOver)
+        {
+            return;
+        }
+
         if (Time.time >= lastIncreaseTime + timePerDecimal)
         {
             currentElixir = Mathf.Min(currentElixir + 0.1f, 10f);

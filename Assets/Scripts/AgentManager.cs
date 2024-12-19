@@ -26,6 +26,8 @@ public class AgentManager : MonoBehaviour
     [SerializeField]
     List<Card> availableTroops;
 
+    public bool gameIsOver = false;
+
     void Start()
     {
         enemies.AddRange(enemyTowers);
@@ -34,11 +36,49 @@ public class AgentManager : MonoBehaviour
 
     void Update()
     {
+        if (gameIsOver)
+        {
+            DestroyTroops(allies);
+            DestroyTroops(enemies);
+            enemies.Clear();
+            allies.Clear();
+
+            return;
+        }
+
         checkAttacks(allies, enemies);
         checkAttacks(enemies, allies);
 
         RemoveDeadTroops(allies);
         RemoveDeadTroops(enemies);
+
+        gameIsOver = CheckIfGameIsOver(allies) || CheckIfGameIsOver(enemies);
+    }
+
+    private bool CheckIfGameIsOver(List<Agent> agents)
+    {
+        foreach (Agent agent in agents)
+        {
+            if (!agent.IsDead() && agent.IsBuilding)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void DestroyTroops(List<Agent> agents)
+    {
+        foreach (Agent agent in agents)
+        {
+            GameObject obj = agent.gameObject;
+
+            if (obj != null)
+            {
+                Destroy(obj);
+            }
+        }
     }
 
     public int AddEnemy(int idx, Vector3 position, float currentElixir)
@@ -145,8 +185,6 @@ public class AgentManager : MonoBehaviour
 
                 if (distance < attacker.attackDistance + victim.transform.localScale.x)
                 {
-                    Debug.Log($"{attacker.name} atacou {victim.name}");
-
                     attackerHitSomething = true;
                     attacker.Attack(victim);
 
@@ -185,7 +223,12 @@ public class AgentManager : MonoBehaviour
 
             float distance = Vector3.Distance(agent.transform.position, enemy.transform.position);
 
-            if (distance < minDist)
+            if (distance > minDist)
+            {
+                continue;
+            }
+
+            if (distance < agent.VisionReach || enemy.IsBuilding)
             {
                 minDist = distance;
                 nextTarget = enemy;
