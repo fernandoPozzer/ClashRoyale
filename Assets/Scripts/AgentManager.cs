@@ -41,20 +41,29 @@ public class AgentManager : MonoBehaviour
         RemoveDeadTroops(enemies);
     }
 
-    public void AddEnemy(int idx, Vector3 position)
+    public int AddEnemy(int idx, Vector3 position, float currentElixir)
     {
+        int elixirCost = availableTroops[idx].elixirCost;
+
+        if (elixirCost > currentElixir)
+        {
+            return 0;
+        }
+
         Agent agent = InstantiateTroop(idx, position, Color.red);
 
         if (!agent.IsGroupOfAgents)
         {
             enemies.Add(agent);
-            return;
+            return elixirCost;
         }
 
         foreach (Agent groupAgent in agent.Agents)
         {
             enemies.Add(groupAgent);
         }
+
+        return elixirCost;
     }
 
     /// <summary>
