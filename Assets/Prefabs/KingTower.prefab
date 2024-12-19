@@ -119,11 +119,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209b04137819e0948915f204952137ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 20
+  attackDistance: 10
   attackCooldown: 1
-  attackDamage: 25
+  attackDamage: 100
+  VisionReach: 10
   MakesAreaDamageAttack: 0
   IsBuilding: 1
+  IsGroupOfAgents: 0
+  Agents: []
   TargetsBuilding: 0
   health: 3500
   speed: 0.001

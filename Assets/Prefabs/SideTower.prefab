@@ -121,9 +121,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDistance: 10
   attackCooldown: 1
-  attackDamage: 20
-  MakesAreaDamageAttack: 0
+  attackDamage: 50
+  VisionReach: 10
+  MakesAreaDamageAttack: 1
   IsBuilding: 1
+  IsGroupOfAgents: 0
+  Agents: []
   TargetsBuilding: 0
   health: 2000
   speed: 0.001
