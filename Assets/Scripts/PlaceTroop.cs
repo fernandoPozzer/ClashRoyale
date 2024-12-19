@@ -48,18 +48,15 @@ public class PlaceTroop : MonoBehaviour
     public void setCurrentTroopMiniPekka()
     {
         currentTroop = 0;
-        Debug.Log("Set Current Troop - Mini Pekka");
     }
 
     public void setCurrentTroopSkeletonArmy()
     {
         currentTroop = 1;
-        Debug.Log("Set Current Troop - Skeleton Army");
     }
 
     public void setCurrentTroopGiant()
     {
         currentTroop = 2;
-        Debug.Log("Set Current Troop - Giant");
     }
 }
